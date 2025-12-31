@@ -1,0 +1,239 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Happy New Year, AYA</title>
+
+  <style>
+    :root{
+      --pink:#ff4d88;
+      --purple:#7c4dff;
+      --bg:#fff0f6;
+      --card:rgba(255,255,255,.86);
+      --ink:#2b1b23;
+      --muted:#6a3a52;
+      --shadow: 0 18px 45px rgba(0,0,0,.12);
+      --radius: 22px;
+    }
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      min-height:100vh;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial;
+      background:
+        radial-gradient(circle at top left,#ffe3ee,transparent 60%),
+        radial-gradient(circle at bottom right,#e7ddff,transparent 60%),
+        var(--bg);
+      color:var(--ink);
+      display:flex;
+      justify-content:center;
+      overflow-x:hidden;
+    }
+
+    /* Floating hearts + flowers */
+    .float-layer{
+      position:fixed;
+      inset:0;
+      pointer-events:none;
+      overflow:hidden;
+      z-index:1;
+    }
+    .floaty{
+      position:absolute;
+      bottom:-40px;
+      opacity:.38;
+      animation: rise linear forwards;
+      will-change: transform, opacity;
+      filter: blur(.1px);
+    }
+    @keyframes rise{
+      0%{transform: translateY(0) translateX(0) rotate(0deg); opacity:0}
+      10%{opacity:.38}
+      100%{transform: translateY(-120vh) translateX(var(--drift)) rotate(var(--rot)); opacity:0}
+    }
+
+    .wrap{
+      width:100%;
+      max-width:900px;
+      padding:30px 18px 90px;
+      position:relative;
+      z-index:2;
+    }
+
+    .card{
+      background:var(--card);
+      border-radius:var(--radius);
+      padding:28px;
+      box-shadow:var(--shadow);
+      text-align:center;
+      backdrop-filter: blur(12px);
+      animation: fade .6s ease;
+    }
+    @keyframes fade{
+      from{opacity:0;transform:translateY(18px)}
+      to{opacity:1;transform:none}
+    }
+    .hidden{display:none}
+
+    h1{font-size:clamp(26px,4vw,38px); margin:0 0 10px}
+    h2{color:var(--muted); font-weight:700; margin:0 0 10px}
+    p{line-height:1.75; margin:10px 0}
+
+    .soft{color: rgba(43,27,35,.72); font-size:14px}
+
+    input{
+      padding:12px 14px;
+      border-radius:14px;
+      border:1px solid rgba(0,0,0,.12);
+      font-size:16px;
+      width:240px;
+      text-align:center;
+      outline:none;
+      background: rgba(255,255,255,.92);
+    }
+    input:focus{
+      border-color: rgba(255,77,136,.55);
+      box-shadow: 0 0 0 4px rgba(255,77,136,.14);
+    }
+
+    button{
+      margin-top:18px;
+      padding:12px 20px;
+      border-radius:14px;
+      border:none;
+      font-weight:800;
+      color:white;
+      background:linear-gradient(135deg,var(--pink),var(--purple));
+      cursor:pointer;
+      transition: transform .08s ease, filter .12s ease;
+    }
+    button:hover{filter:brightness(1.03)}
+    button:active{transform:scale(.985)}
+
+    .month{
+      font-size:52px;
+      font-weight:950;
+      background:linear-gradient(135deg,var(--pink),var(--purple));
+      -webkit-background-clip:text;
+      background-clip:text;
+      color:transparent;
+      margin:12px 0;
+    }
+
+    /* Envelope (click-to-open) */
+    .envelope-zone{
+      margin-top:22px;
+      display:flex;
+      justify-content:center;
+    }
+    .envelope{
+      width:330px;
+      max-width:92vw;
+      cursor:pointer;
+      user-select:none;
+      position:relative;
+      outline:none;
+      animation: gentleFloat 3s ease-in-out infinite;
+    }
+    @keyframes gentleFloat{
+      0%,100%{transform:translateY(0)}
+      50%{transform:translateY(-8px)}
+    }
+
+    .env-body{
+      position:relative;
+      height:175px;
+      border-radius:18px;
+      background: linear-gradient(135deg, rgba(255,255,255,.95), rgba(255,255,255,.85));
+      box-shadow:0 16px 35px rgba(0,0,0,.14);
+      overflow:hidden;
+      border:1px solid rgba(0,0,0,.06);
+    }
+    .env-shadow{
+      position:absolute;
+      inset:0;
+      background:
+        radial-gradient(circle at 20% 25%, rgba(255,77,136,.10), transparent 45%),
+        radial-gradient(circle at 80% 20%, rgba(124,77,255,.10), transparent 45%),
+        radial-gradient(circle at 40% 90%, rgba(255,215,90,.10), transparent 50%);
+      pointer-events:none;
+    }
+
+    .flap{
+      position:absolute;
+      left:0; right:0;
+      top:0;
+      height:100px;
+      transform-origin: top center;
+      transform: rotateX(0deg);
+      transition: transform .65s ease;
+      background:
+        linear-gradient(135deg, rgba(255,77,136,.18), rgba(124,77,255,.14)),
+        linear-gradient(180deg, rgba(255,255,255,.9), rgba(255,255,255,.75));
+      clip-path: polygon(0 0, 100% 0, 50% 70%);
+      border-top-left-radius:18px;
+      border-top-right-radius:18px;
+    }
+
+    .seal{
+      position:absolute;
+      left:50%;
+      top:80px;
+      transform:translateX(-50%);
+      width:54px;
+      height:54px;
+      border-radius:999px;
+      background: linear-gradient(135deg, var(--pink), var(--purple));
+      box-shadow: 0 12px 26px rgba(255,77,136,.22);
+      display:grid;
+      place-items:center;
+      color:white;
+      font-weight:900;
+      letter-spacing:.5px;
+      transition: transform .35s ease, opacity .35s ease;
+    }
+
+    .env-front{
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+    }
+    .env-front::before{
+      content:"";
+      position:absolute;
+      left:0; right:0;
+      bottom:0;
+      height:112px;
+      background: linear-gradient(180deg, rgba(255,255,255,.0), rgba(255,255,255,.86));
+      clip-path: polygon(0 100%, 50% 40%, 100% 100%, 100% 0, 0 0);
+      opacity:.92;
+    }
+
+    .tap-hint{
+      margin-top:10px;
+      font-size:13px;
+      color: rgba(43,27,35,.65);
+    }
+
+    /* Paper that slides out */
+    .paper{
+      position:absolute;
+      left:50%;
+      top:18px;
+      transform: translateX(-50%) translateY(72px) scale(.98);
+      width:86%;
+      height:0;
+      opacity:0;
+      border-radius:14px;
+      background:#ffffff;
+      box-shadow:0 18px 40px rgba(0,0,0,.16);
+      border:1px solid rgba(0,0,0,.06);
+      transition: transform .75s ease, opacity .45s ease, height .75s ease;
+      overflow:hidden;
+      display:flex;
+      flex-direction:column;
+      text-align:left;
+      padding:0 16px;
+    }
+    .
